@@ -8,6 +8,14 @@ This computes betweenness centrality for Turkey
 as baseline coordinates for turkey we take
 (25, 35) (46, 43)
 
+To dos:
+    - add option all to get centrality
+    - integrate data on impassable rivers
+    - maybe compute paths by intervals 0<50, 50<100 etc
+    - do inverted version
+    - note that bias towards the core plays no role when using this technique, i.e. it is not necessary to keep
+    expanding grid
+
 @author: stefan
 """
 import os
@@ -36,7 +44,7 @@ fac=1
 
 #need at least 2 hours to reach next grid cell
 
-dist_max=50
+dist_max=100
 dif=dist_max/2*0.0833
 
 df=dist_mat(file, y_upper=y_ur+dif, y_lower=y_ll-dif, x_left=x_ll-dif, x_right=x_ur+dif)
@@ -56,7 +64,7 @@ m = Basemap(llcrnrlat=df.lat_low,urcrnrlat=df.lat_up, llcrnrlon=df.lon_left,urcr
 
 #cent=np.copy(heat)
 #cent[cent>100]=100
-plot_path(m, elev=df.centrality, file=os.path.join(dir1, 'Output', 'test.png'))
+plot_path(m, elev=df.centrality, file=os.path.join(dir1, 'Output', 'test.png'), interpolation='Gaussian')
 
 
 """
